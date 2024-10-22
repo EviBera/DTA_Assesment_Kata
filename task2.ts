@@ -5,9 +5,37 @@ Given an array, create a function that finds the most frequent element.
 If multiple elements occur the same number of times, any of them can be returned.
 */
 
-function mostFrequentElement/* generic type */(/* parameters */): /* return type */ {
+function mostFrequentElement<Type>(input: Type[]): Type | undefined {
+    let counter = new Map< Type, number>();
 
+    input.forEach(item => {
+        let occurence = counter.get(item);
+        if(occurence === undefined){
+            counter.set(item, 1);
+        } else {
+            counter.set(item, occurence + 1);
+        }
+    });
+    //console.log(counter);
+    
+    let goal: number = 0;
+    let result = null;
+
+    counter.forEach((value, key) => {
+        if(value > goal){
+            goal = value;
+            result = key;
+        }
+    });
+
+    if(result !== null){
+        return result;
+    } else {
+        return undefined;
+    }
 }
+
+
 
 // Tests
 

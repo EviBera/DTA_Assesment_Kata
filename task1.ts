@@ -6,8 +6,31 @@ and determines whether the two arrays contain the same elements in any order.
 The elements must be of the same type and can occur multiple times in the arrays. 
 */
 
-function compareArrays/* generic type */(/* parameters */): /* return type */ {
+function compareArrays<Type>(arr1: Type[], arr2: Type[]): boolean {
 
+    const catalogue = new Map();
+    arr1.forEach(item => {
+        if(!catalogue.get(item)){
+            catalogue.set(item, 1)
+        } else {
+            let occurence = catalogue.get(item);
+            catalogue.set(item, occurence + 1);
+        }
+    });
+
+    let checks = arr2.map(item => {
+        let occurence = catalogue.get(item);
+        catalogue.set(item, occurence - 1);
+        return occurence;
+    });
+
+    console.log(checks);
+    console.log("filtered:")
+    console.log(checks.filter(x => x >= 1 ));
+    console.log(".................");
+    
+    return checks.filter(x => x >= 1 ).length === checks.length;
+    
 }
 
 // Tests
